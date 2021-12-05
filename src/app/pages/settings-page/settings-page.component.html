@@ -1,0 +1,91 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Имя</mat-label>
+    <input type="text" matInput formControlName="aFirstName">
+    <mat-error *ngIf="form.get('aFirstName').hasError('required')">
+      Имя должно быть заполненно
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Фамилия</mat-label>
+    <input type="text" matInput formControlName="aLastName">
+    <mat-error *ngIf="form.get('aLastName').hasError('required')">
+      Фамилия должна быть заполненно
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Отчество</mat-label>
+    <input type="text" matInput formControlName="aMiddleName">
+    <mat-error *ngIf="form.get('aMiddleName').hasError('required')">
+      Отчество должно быть заполненно
+    </mat-error>
+  </mat-form-field>
+  <h3>Автомобили</h3>
+  <div class="cars_header_form_group" *ngIf="formArray.controls.length">
+    <div>Номер</div>
+    <div>Марка</div>
+    <div>Модель</div>
+    <div>Год</div>
+    <div></div>
+  </div>
+  <div
+    formArrayName="aCars"
+    *ngFor="let item of form.get('aCars')['controls']; let i = index;"
+  >
+    <div class="cars_form_group" [formGroupName]="i">
+
+      <mat-form-field appearance="fill">
+        <input type="text" matInput formControlName="number">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <input type="text" matInput formControlName="manufacturer">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <input type="text" matInput formControlName="model">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <input type="text" matInput formControlName="year">
+      </mat-form-field>
+
+      <button mat-button [disabled]="viewMode" (click)="removeCar(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <button
+    class="car_add"
+    type="button"
+    mat-raised-button
+    color="primary"
+    [disabled]="viewMode"
+    (click)="addCar()"
+  >
+    <mat-icon>add</mat-icon>
+    Добавить автомобиль
+  </button>
+  <div class="button_group">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid || viewMode"
+    >
+      <mat-icon>save</mat-icon>
+      Сохранить
+    </button>
+    <button
+      type="button"
+      mat-raised-button
+      routerLink="users"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Назад
+    </button>
+  </div>
+</form>

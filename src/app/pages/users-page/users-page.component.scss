@@ -1,0 +1,19 @@
+.button_add {
+  width: 80%;
+  margin: 20px auto;
+  display: block;
+}
+table {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: #000;
+}
