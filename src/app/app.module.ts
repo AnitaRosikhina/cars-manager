@@ -19,7 +19,6 @@ import {InMemoryDataService} from "./api/in-memory-data.service";
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,35 +3,35 @@ form {
   flex-direction: column;
   width: 80%;
   margin: 20px auto;
-}
 
-.cars_header_form_group {
-  div:last-child {
-    width: 80px;
-  }
-}
-
-.cars_header_form_group, .cars_form_group {
-  display: flex;
-  justify-content: space-between;
-
-  div, mat-form-field {
-    width: calc(25% - 80px);
-    text-align: center;
+  .cars_header_form_group {
+    div:last-child {
+      width: 80px;
+    }
   }
 
-  button {
-    width: 80px;
+  .cars_header_form_group, .cars_form_group {
+    display: flex;
+    justify-content: space-between;
+
+    div, mat-form-field {
+      width: calc(25% - 80px);
+      text-align: center;
+    }
+
+    button {
+      width: 80px;
+    }
   }
-}
 
-.car_add {
-  width: 240px;
-  margin-bottom: 5px;
-}
+  .car_add {
+    width: 240px;
+    margin-bottom: 5px;
+  }
 
-.button_group {
-  width: 240px;
-  display: flex;
-  justify-content: space-between;
+  .button_group {
+    width: 240px;
+    display: flex;
+    justify-content: space-between;
+  }
 }

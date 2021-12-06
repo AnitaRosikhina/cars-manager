@@ -3,20 +3,25 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UsersService} from "../../shared/services/users.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {NumberOfCarValidator} from "../../shared/validators/numberOfCar.validator";
+import {CarsValidator} from "../../shared/validators/cars.validator";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
-  styleUrls: ['./settings-page.component.scss']
+  styleUrls: ['./settings-page.component.scss'],
 })
 export class SettingsPageComponent implements OnInit {
   form: FormGroup;
+  allUsers = []
 
-  constructor(private fb: FormBuilder,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private usersService: UsersService) {
-  }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private usersService: UsersService,
+    private _snackBar: MatSnackBar) {}
 
   get formArray(): FormArray {
     return this.form.controls['aCars'] as FormArray;
@@ -31,14 +36,13 @@ export class SettingsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // move to buildForm function
     this.form = this.fb.group({
       aFirstName: [null, Validators.required],
       aLastName: [null, Validators.required],
       aMiddleName: [null, Validators.required],
       aCars: this.fb.array([
         this.createNewCarFormGroup()
-      ])
+      ], CarsValidator.hasCars())
     })
 
     if (this.viewMode || this.editMode) {
@@ -56,27 +60,41 @@ export class SettingsPageComponent implements OnInit {
         }
       })
     }
+    this.getAllUsers()
+  }
+
+  getAllUsers(): void {
+    this.usersService.getOwners().subscribe(res => {
+      this.allUsers = res
+    })
   }
 
   submit(): void {
-    // ToDo add condition for unic car
-    let obs: Observable<any>
-    if (!this.viewMode && !this.editMode) {
-      obs = this.usersService.createOwner(
-        this.form.value.lastName,
-        this.form.value.firstName,
-        this.form.value.middleName,
-        this.form.value.cars
-      )
-    } else if (this.editMode) {
-      obs = this.usersService.editOwner({
-        ...this.form.value,
-        id: +this.activatedRoute.snapshot.params['id']
+    if (!this.allUsers
+      .some(user => user.aCars
+        .some(car => this.form.value.aCars
+          .some(formCar => formCar.number === car.number)))
+    ) {
+      let obs: Observable<any>
+      if (!this.viewMode && !this.editMode) {
+        obs = this.usersService.createOwner(
+          this.form.value.aLastName,
+          this.form.value.aFirstName,
+          this.form.value.aMiddleName,
+          this.form.value.aCars
+        )
+      } else if (this.editMode) {
+        obs = this.usersService.editOwner({
+          ...this.form.value,
+          id: +this.activatedRoute.snapshot.params['id']
+        })
+      }
+      obs.subscribe(() => {
+        this.router.navigate(['/'])
       })
+    } else {
+      this.openSnackBar('Номер уже занят!')
     }
-    obs.subscribe(() => {
-      this.router.navigate(['/'])
-    })
   }
 
   addCar(): void {
@@ -85,7 +103,7 @@ export class SettingsPageComponent implements OnInit {
 
   createNewCarFormGroup(): FormGroup {
     return this.fb.group({
-      number: [null, Validators.required],
+      number: [null, [Validators.required, NumberOfCarValidator.numberOfCar]],
       manufacturer: [null, Validators.required],
       model: [null, Validators.required],
       year: [null, [Validators.required, Validators.min(1990), Validators.max(new Date().getFullYear())]],
@@ -94,5 +112,9 @@ export class SettingsPageComponent implements OnInit {
 
   removeCar(i: number): void {
     this.formArray.removeAt(i)
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Ok', {duration: 5000});
   }
 }

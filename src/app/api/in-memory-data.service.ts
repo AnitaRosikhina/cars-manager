@@ -7,9 +7,9 @@ export class InMemoryDataService implements InMemoryDbService {
       users: [
         {
           id: 1,
-          aFirstName: 'Ivan',
-          aLastName: 'Ivanov',
-          aMiddleName: 'Ivanovich',
+          aFirstName: 'Иван',
+          aLastName: 'Иванов',
+          aMiddleName: 'Иванович',
           aCars: [
             {
               number: 'BC2018HM',
@@ -27,9 +27,9 @@ export class InMemoryDataService implements InMemoryDbService {
         },
         {
           id: 2,
-          aFirstName: 'Ivan 2',
-          aLastName: 'Ivanov 2',
-          aMiddleName: 'Ivanovich 2',
+          aFirstName: 'Петр',
+          aLastName: 'Петров',
+          aMiddleName: 'Петрович',
           aCars: [
             {
               number: 'BC2012HM',
@@ -41,9 +41,9 @@ export class InMemoryDataService implements InMemoryDbService {
         },
         {
           id: 3,
-          aFirstName: 'Ivan 3',
-          aLastName: 'Ivanov 3',
-          aMiddleName: 'Ivanovich 3',
+          aFirstName: 'Олег',
+          aLastName: 'Олегов',
+          aMiddleName: 'Олегович',
           aCars: [
             {
               number: 'BC1111HM',

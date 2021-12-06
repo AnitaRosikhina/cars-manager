@@ -11,22 +11,22 @@
 
   <ng-container matColumnDef="firstName">
     <th mat-header-cell *matHeaderCellDef> Имя</th>
-    <td mat-cell *matCellDef="let element"> {{element.aFirstName}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.aFirstName | titlecase}} </td>
   </ng-container>
 
   <ng-container matColumnDef="lastName">
     <th mat-header-cell *matHeaderCellDef> Фамилия</th>
-    <td mat-cell *matCellDef="let element"> {{element.aLastName}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.aLastName | titlecase}} </td>
   </ng-container>
 
   <ng-container matColumnDef="middleName">
     <th mat-header-cell *matHeaderCellDef> Отчество</th>
-    <td mat-cell *matCellDef="let element"> {{element.aMiddleName}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.aMiddleName | titlecase}} </td>
   </ng-container>
 
   <ng-container matColumnDef="sum">
     <th mat-header-cell *matHeaderCellDef> Количество машин</th>
-    <td mat-cell *matCellDef="let element"> {{element.aCars.length}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.aCars?.length}} </td>
   </ng-container>
 
   <ng-container matColumnDef="editButton">
